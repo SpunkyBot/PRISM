@@ -1,0 +1,5 @@
+.idea
+.svn
+.DS_Store
+*.*~
+*.sw[po]
