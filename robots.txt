@@ -1,0 +1,16 @@
+# robots.txt
+
+# Twitter
+User-agent: Twitterbot
+Disallow:
+
+# Google Image
+User-agent: Googlebot-Image
+Disallow:
+
+# Every bot that might possibly read and respect this file
+User-agent: *
+Disallow: /cache/
+Disallow: /conf/
+Disallow: /lib/
+Disallow: /tpl/
