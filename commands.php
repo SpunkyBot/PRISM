@@ -1,9 +1,4 @@
-<?php
-$title = 'Admin Commands';
 
-// HTML Header
-require('./tpl/header.php');
-?>
         <div class="page-header">
             <h1>Admin Levels and Bot Commands</h1>
         </div>
@@ -497,7 +492,3 @@ require('./tpl/header.php');
                 </li>
             </ul>
         </div>
-<?php
-// HTML Footer
-require('./tpl/footer.php');
-?>
