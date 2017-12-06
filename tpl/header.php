@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRISM - <?php echo $title; ?></title>
+    <title>PRISM - Web frontend for Spunky Bot</title>
     <meta name="description" content="PRISM - Web frontend for Spunky Bot, a free game server administration bot and RCON tool for Urban Terror">
     <meta name="keywords" content="Spunky Bot, PRISM, Player, Related, Information, Statistic, Monitor, web, frontend, Urban, Terror">
     <meta name="apple-mobile-web-app-title" content="PRISM">
@@ -41,19 +41,19 @@
         </div>
         <div class="navbar-collapse collapse navbar-right">
           <ul class="nav navbar-nav">
-            <li<?php echo (basename($_SERVER['PHP_SELF'], '.php') == 'index') ? " class='active'" : ""; ?>><a href="./">SERVER</a></li>
-            <li<?php echo (basename($_SERVER['PHP_SELF'], '.php') == 'stats') ? " class='active'" : ""; ?>><a href="./stats.php">PLAYER STATS</a></li>
-            <li<?php echo (basename($_SERVER['PHP_SELF'], '.php') == 'banlist') ? " class='active'" : ""; ?>><a href="./banlist.php">BANLIST</a></li>
+            <li<?php echo ($page == 'home') ? " class='active'" : ""; ?>><a href="./">SERVER</a></li>
+            <li<?php echo ($page == 'player-stats') ? " class='active'" : ""; ?>><a href="./?view=player-stats">PLAYER STATS</a></li>
+            <li<?php echo ($page == 'banlist') ? " class='active'" : ""; ?>><a href="./?view=banlist">BANLIST</a></li>
             <li class="dropdown">
               <a class="dropdown-toggle" role="button" href="#" data-toggle="dropdown">ABOUT <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li class="dropdown-header">Team</li>
-                <li><a href="./about.php">ABOUT US</a></li>
-                <li><a href="./staff.php">STAFF</a></li>
+                <li><a href="./?view=about">ABOUT US</a></li>
+                <li><a href="./?view=staff">STAFF</a></li>
                 <li class="divider" role="separator"></li>
                 <li class="dropdown-header">Server</li>
-                <li><a href="./commands.php">COMMANDS</a></li>
-                <li><a href="./rules.php">RULES</a></li>
+                <li><a href="./?view=commands">COMMANDS</a></li>
+                <li><a href="./?view=rules">RULES</a></li>
               </ul>
             </li>
           </ul>
