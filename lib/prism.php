@@ -66,7 +66,7 @@ class Prism
             if (socket_set_nonblock($this->_socket)) {
                 $time = time();
                 $err = "";
-                while (!@socket_connect($this->_socket, $this->_host, $this->_port)) {
+                while (!socket_connect($this->_socket, $this->_host, $this->_port)) {
                     $err = socket_last_error($this->_socket);
                     if ($err == 115 || $err == 114) {
                         if ((time() - $time) >= $timeout) {
