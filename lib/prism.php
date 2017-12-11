@@ -185,7 +185,7 @@ class Prism
     private function gameType()
     {
         $out = '';
-        if ($this->_offline == false) {
+        if ($this->_offline === false) {
             if ($this->_params['g_gametype'] == 0 || $this->_params['g_gametype'] == 2) $out = "Free For All";
             elseif ($this->_params['g_gametype'] == 1) $out = "Last Man Standing";
             elseif ($this->_params['g_gametype'] == 3) $out = "Team Death Match";
