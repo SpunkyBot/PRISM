@@ -37,6 +37,7 @@ class Prism
             $stmt = $conn->prepare($db_query);
             $stmt->execute($params);
             $result = $stmt;
+            $result = $stmt->fetchAll();
             $conn = null;
         } catch (PDOException $e) {
             $result = '<div class="alert alert-danger"><strong>Exception:</strong> ' . $e->getMessage();
