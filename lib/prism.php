@@ -28,26 +28,32 @@ class Prism
         $this->_players = array();
     }
 
-    private function dbQueryList($query)
+    private function dbQueryList($query, $params=array())
     {
         $db_query = strval($query);
+        $stmt = null;
         try {
-            $db = new PDO('sqlite:' . $this->_db_path);
-            $result = $db->query($db_query);
-            $db = NULL;
+            $conn = new PDO('sqlite:' . $this->_db_path);
+            $stmt = $conn->prepare($db_query);
+            $stmt->execute($params);
+            $result = $stmt;
+            $conn = null;
         } catch (PDOException $e) {
             $result = '<div class="alert alert-danger"><strong>Exception:</strong> ' . $e->getMessage();
         }
         return $result;
     }
 
-    private function dbQueryElement($query)
+    private function dbQueryElement($query, $params=array())
     {
         $db_query = strval($query);
+        $stmt = null;
         try {
-            $db = new PDO('sqlite:' . $this->_db_path);
-            $result = $db->query($db_query)->fetch();
-            $db = NULL;
+            $conn = new PDO('sqlite:' . $this->_db_path);
+            $stmt = $conn->prepare($db_query);
+            $stmt->execute($params);
+            $result = $stmt->fetch();
+            $conn = null;
         } catch (PDOException $e) {
             $result = '<div class="alert alert-danger"><strong>Exception:</strong> ' . $e->getMessage();
         }
