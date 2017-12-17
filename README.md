@@ -19,6 +19,8 @@ PRISM - web frontend for Spunky Bot
 ## License
 PRISM is released under the MIT license, see the [LICENSE](https://github.com/SpunkyBot/PRISM/blob/master/LICENSE) file for details.
 
+This product includes GeoLite data created by MaxMind, available from http://www.maxmind.com.
+
 
 ## Security Reports
 Please send any sensitive issue to security@spunkybot.de. Thanks!
@@ -27,3 +29,7 @@ Please send any sensitive issue to security@spunkybot.de. Thanks!
 ## Changelog
 
 You can keep up-to-date with the changes that we have made via our [releases page](https://github.com/SpunkyBot/PRISM/releases).
+
+
+## Thank you!
+We really appreciate all kinds of feedback and contributions. Thanks for using and supporting PRISM!
