@@ -207,7 +207,9 @@ class Prism
         if ($count > 0) 
         {
           $op = '<ul>';
-          for ($i = 0; $i < $count; $i++) { $op .= '<li>' . $this->prettyName($players[$i]['name']) . '</li>'; }
+          for ($i = 0; $i < $count; $i++) {
+              $op .= '<li>' . $this->prettyName($players[$i]['name']) . '</li>';
+          }
           $op .= '</ul>';
         }
         else $op = 'Server is empty - no players online';
