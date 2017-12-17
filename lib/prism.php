@@ -306,13 +306,13 @@ class Prism
 
         $total = count($players);
         if ($total > 0) {
+            $last_connect = date('Y-m-d H:i:s', (time() - 7200));
             for ($i = 0; $i < $total; $i++) {
                 $num = $i + 1;
                 $prettyname = $this->prettyName($players[$i]['name']);
-                $query = $this->dbQueryElement('SELECT id FROM `xlrstats` WHERE name = "'.$prettyname.'" AND last_played > "'.date('Y-m-d H:i:s', (time() - 7200)).'"');
-                if ($query['id']) $out .= '<tr><td>' . $num . '</td><td><a href="./?view=player-stats&id=' . $query['id'] . '">' . $prettyname . '</a></td><td>' . $players[$i]['score'] . '</td>';
-                else $out .= '<tr><td>' . $num . '</td><td>' . $prettyname . '</td><td>' . $players[$i]['score'] . '</td>';
-                if ($players[$i]['ping'] == 999) $out .= '<td>Connecting...</td></tr>'; else $out .= '<td>' . $players[$i]['ping'] . '</td></tr>';
+                $query = $this->dbQueryElement('SELECT id FROM `xlrstats` WHERE name = ? AND last_played > ?;', array($prettyname, $last_connect));
+                $out .= ($query['id'] ? '<tr><td>' . $num . '</td><td><a href="./?view=player-stats&id=' . $query['id'] . '">' . $prettyname . '</a></td><td>' . $players[$i]['score'] . '</td>' : '<tr><td>' . $num . '</td><td>' . $prettyname . '</td><td>' . $players[$i]['score'] . '</td>');
+                $out .= ($players[$i]['ping'] == 999 ? '<td>Connecting...</td></tr>' : '<td>' . $players[$i]['ping'] . '</td></tr>');
             }
         }
         else $out .= '<tr><td></td><td>SERVER IS EMPTY - NO PLAYERS ONLINE</td><td></td><td></td></tr>';
@@ -342,7 +342,7 @@ class Prism
             $filter_query = '(rounds > 15 OR kills > 300) AND last_played > "'.$last_played.'" AND guid NOT IN (SELECT guid FROM `ban_list`)';
             $table_foot_text = 'You need at least 15 rounds or 300 kills to appear on this list.';
         }
-        $result = $this->dbQueryList('SELECT * FROM `xlrstats` WHERE ' . $filter_query . ' ORDER BY kills DESC');
+        $result = $this->dbQueryList('SELECT * FROM `xlrstats` WHERE ' . $filter_query . ' ORDER BY kills DESC;');
         $out ='
       <div class="page-header">
         <h1>Player Statistics</h1>
@@ -422,7 +422,7 @@ class Prism
               </thead>
               <tbody>';
 
-            $result = $this->dbQueryList('SELECT id,name,last_played FROM `xlrstats` WHERE ' . $filter_query . ' ORDER BY last_played DESC LIMIT 5');
+            $result = $this->dbQueryList('SELECT id,name,last_played FROM `xlrstats` WHERE ' . $filter_query . ' ORDER BY last_played DESC LIMIT 5;');
             foreach($result as $row)
             {
               $out .= '
@@ -450,7 +450,7 @@ class Prism
 
             $now = date('Y-m-d H:i:s', time());
             $mia = date('Y-m-d H:i:s', (time() - 2678400));
-            $result = $this->dbQueryList('SELECT id,name,last_played FROM `xlrstats` WHERE '. $filter_query . ' AND last_played < "' . $mia . '" ORDER BY last_played DESC LIMIT 5');
+            $result = $this->dbQueryList('SELECT id,name,last_played FROM `xlrstats` WHERE '. $filter_query . ' AND last_played < ? ORDER BY last_played DESC LIMIT 5;', array($mia));
             foreach($result as $row)
             {
               $out .= '
@@ -471,10 +471,10 @@ class Prism
         </div>
       </div>';
 
-        $most_kills = $this->dbQueryElement('SELECT id,name,kills FROM `xlrstats` WHERE ' . $filter_query . ' ORDER BY kills DESC LIMIT 1');
-        $best_ratio = $this->dbQueryElement('SELECT id,name,ratio FROM `xlrstats` WHERE ' . $filter_query . ' ORDER BY ratio DESC LIMIT 1');
-        $highest_streak = $this->dbQueryElement('SELECT id,name,max_kill_streak FROM `xlrstats` WHERE ' . $filter_query . ' ORDER BY max_kill_streak DESC LIMIT 1');
-        $most_rounds = $this->dbQueryElement('SELECT id,name,rounds FROM `xlrstats` WHERE ' . $filter_query . ' ORDER BY rounds DESC LIMIT 1');
+        $most_kills = $this->dbQueryElement('SELECT id,name,kills FROM `xlrstats` WHERE ' . $filter_query . ' ORDER BY kills DESC LIMIT 1;');
+        $best_ratio = $this->dbQueryElement('SELECT id,name,ratio FROM `xlrstats` WHERE ' . $filter_query . ' ORDER BY ratio DESC LIMIT 1;');
+        $highest_streak = $this->dbQueryElement('SELECT id,name,max_kill_streak FROM `xlrstats` WHERE ' . $filter_query . ' ORDER BY max_kill_streak DESC LIMIT 1;');
+        $most_rounds = $this->dbQueryElement('SELECT id,name,rounds FROM `xlrstats` WHERE ' . $filter_query . ' ORDER BY rounds DESC LIMIT 1;');
         $out .= '
       <hr>
         <div>
@@ -587,15 +587,15 @@ class Prism
     private function renderPlayerDetailStats($id)
     {
         $gi = geoip_open('./lib/GeoIP.dat',GEOIP_STANDARD);
-        $result = $this->dbQueryElement("SELECT * FROM `xlrstats` WHERE id='$id';");
+        $result = $this->dbQueryElement('SELECT * FROM `xlrstats` WHERE id = ?;', array($id));
         $prettyname = $this->prettyName($result['name']);
         $rankarray = $this->getRank($result['kills']);
         $trophyarray = $this->trophyCalculation($result['kills']);
         $guid = $result['guid'];
-        $player_detail = $this->dbQueryElement("SELECT id,aliases FROM `player` WHERE guid='$guid';");
+        $player_detail = $this->dbQueryElement('SELECT id,aliases FROM `player` WHERE guid = ?;', array($guid));
         $aliaslist = $this->prettyName($player_detail['aliases']);
         $today = date('Y-m-d H:i:s', time());
-        $ban_count = $this->dbQueryElement("SELECT COUNT(*) as count FROM `ban_list` WHERE guid='$guid' AND expires > '$today';");
+        $ban_count = $this->dbQueryElement('SELECT COUNT(*) as count FROM `ban_list` WHERE guid = ? AND expires > ?;', array($guid, $today));
         $out = '
       <div class="page-header">
         <div>
@@ -752,7 +752,7 @@ class Prism
       </tr>
       </thead>
       <tbody>';
-        $result = $this->dbQueryList('SELECT * FROM `ban_list` ORDER BY timestamp DESC');
+        $result = $this->dbQueryList('SELECT * FROM `ban_list` ORDER BY timestamp DESC;');
         foreach($result as $row)
         {
             $prettyname = $this->prettyName($row['name']);
@@ -810,7 +810,7 @@ class Prism
       <div>
         <h3>Admins</h3>
         <ul>';
-        $result = $this->dbQueryList('SELECT id,name FROM `xlrstats` WHERE admin_role > 20 ORDER BY admin_role DESC, name DESC');
+        $result = $this->dbQueryList('SELECT id,name FROM `xlrstats` WHERE admin_role > 20 ORDER BY admin_role DESC, name DESC;');
         foreach($result as $row)
         {
             $prettyname = $this->prettyName($row['name']);
@@ -821,7 +821,7 @@ class Prism
         $mout = '
         <h3>Moderators</h3>
         <ul>';
-        $result = $this->dbQueryList('SELECT id,name FROM `xlrstats` WHERE admin_role = 20 ORDER BY name DESC');
+        $result = $this->dbQueryList('SELECT id,name FROM `xlrstats` WHERE admin_role = 20 ORDER BY name DESC;');
         $mod_count = 0;
         foreach($result as $row)
         {
