@@ -36,7 +36,6 @@ class Prism
             $conn = new PDO('sqlite:' . $this->_db_path);
             $stmt = $conn->prepare($db_query);
             $stmt->execute($params);
-            $result = $stmt;
             $result = $stmt->fetchAll();
             $conn = null;
         } catch (PDOException $e) {
