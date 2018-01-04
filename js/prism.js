@@ -7,8 +7,8 @@ $(document).ready( function(){
 		"lengthMenu": [[15, 30, -1], [15, 30, "All"]], "bLengthChange": false,
 		"fnDrawCallback": function (o) {
 			if ( o._iDisplayStart != oldStart ) {
-				var targetOffset = $('#playerstats').offset().top - 45;
-				$('html,body').animate({scrollTop: targetOffset}, 500);
+				var targetOffset = $("#playerstats").offset().top - 45;
+				$("html,body").animate({scrollTop: targetOffset}, 500);
 				oldStart = o._iDisplayStart;
 			}
 			$('[data-toggle="popover"]').popover();
@@ -22,8 +22,8 @@ $(document).ready( function(){
 		"lengthMenu": [[25, 50, -1], [25, 50, "All"]], "bLengthChange": false, "searching": false,
 		"fnDrawCallback": function (o) {
 			if ( o._iDisplayStart != oldStart ) {
-				var targetOffset = $('#banlist').offset().top - 45;
-				$('html,body').animate({scrollTop: targetOffset}, 500);
+				var targetOffset = $("#banlist").offset().top - 45;
+				$("html,body").animate({scrollTop: targetOffset}, 500);
 				oldStart = o._iDisplayStart;
 			}
 			$('[data-toggle="popover"]').popover();
@@ -34,7 +34,7 @@ $(document).ready( function(){
 
 // Toggle Up/Down icon
 $('.toggle').on('click', function(){
-	$(this).toggleClass('fa-plus-circle fa-minus-circle');
+	$(this).toggleClass("fa-plus-circle fa-minus-circle");
 });
 
 // Popovers
