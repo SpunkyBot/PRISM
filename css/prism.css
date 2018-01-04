@@ -33,6 +33,9 @@ body {
     cursor: pointer;
 }
 
+.cursor-default {
+}
+
 /* Positioning */
 .online-players {
     padding-top: 1.5rem;

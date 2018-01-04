@@ -393,7 +393,7 @@ class Prism
           $out .= '
           <tr>
             <td>' . $rank . '</td>
-            <td><i class="cursor-pointer fa fa-fw ' . $icon . '" data-toggle="tooltip" data-placement="top" title="' . $this->getRoleName($row['admin_role']) . '"></i> <i class="cursor-pointer rank rank-fw rank-stack ' . $rankarray[3] . '" data-toggle="tooltip" data-placement="top" title="' . $rankarray[0] . '"></i> <a href="?view=player-stats&id=' . $row['id'] . '">' . $prettyname . '</a></td>
+            <td><i class="cursor-default fa fa-fw ' . $icon . '" data-toggle="tooltip" data-placement="top" title="' . $this->getRoleName($row['admin_role']) . '"></i> <i class="cursor-default rank rank-fw rank-stack ' . $rankarray[3] . '" data-toggle="tooltip" data-placement="top" title="' . $rankarray[0] . '"></i> <a href="?view=player-stats&id=' . $row['id'] . '">' . $prettyname . '</a></td>
             <td>' . $skill . '</td>
             <td>' . $row['ratio'] . '</td>
             <td>' . $row['kills'] . ' / ' . $row['deaths'] . ' (' . $row['suicides'] . ')</td>
@@ -602,7 +602,7 @@ class Prism
           <i class="fa fa-user fa-4x fa-border fa-pull-left" data-toggle="tooltip" data-placement="bottom" title="Player ID: ' . $player_detail['id'] . ' | Stats ID: ' . $result['id'] . '"></i>
           <h2>' . $prettyname . '
           <small class="flag-icon flag-icon-' . strtolower(geoip_country_code_by_addr($geo, $result['ip_address'])) . '" data-toggle="tooltip" data-placement="right" title="' . geoip_country_name_by_addr($geo, $result['ip_address']) . '"></small></h2>
-          <p>' . ($ban_count['count'] > 0 ? '<span class="label label-as-badge label-danger">Player is banned</span>' : '<strong>' . $this->getRoleName($result['admin_role']) . '</strong>' . ($result['last_played'] < date('Y-m-d H:i:s', (time() - 2678400)) ? ' <span class="label label-as-badge label-danger cursor-pointer" data-toggle="tooltip" data-placement="right" title="Last game: ' . date_diff(date_create($today), date_create($result['last_played']))->format('%a days ago') . '">Missing In Action</span>' : '')) . '</p>
+          <p>' . ($ban_count['count'] > 0 ? '<span class="label label-as-badge label-danger">Player is banned</span>' : '<strong>' . $this->getRoleName($result['admin_role']) . '</strong>' . ($result['last_played'] < date('Y-m-d H:i:s', (time() - 2678400)) ? ' <span class="label label-as-badge label-danger cursor-default" data-toggle="tooltip" data-placement="right" title="Last game: ' . date_diff(date_create($today), date_create($result['last_played']))->format('%a days ago') . '">Missing In Action</span>' : '')) . '</p>
           <p class="small">Registered on ' . date_format(date_create($result['first_seen']), 'F jS, Y G:i A') . '<span class="pull-right">Last seen: ' . date_format(date_create($result['last_played']), 'F jS, G:i') . '</span></p>
         </div>
       </div>
