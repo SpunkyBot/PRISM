@@ -11,8 +11,8 @@ $(document).ready( function(){
 				$("html,body").animate({scrollTop: targetOffset}, 500);
 				oldStart = o._iDisplayStart;
 			}
-			$('[data-toggle="popover"]').popover();
-			$('[data-toggle="tooltip"]').tooltip();
+			$("[data-toggle='popover']").popover();
+			$("[data-toggle='tooltip']").tooltip();
 		}
 	});
 
@@ -26,14 +26,14 @@ $(document).ready( function(){
 				$("html,body").animate({scrollTop: targetOffset}, 500);
 				oldStart = o._iDisplayStart;
 			}
-			$('[data-toggle="popover"]').popover();
-			$('[data-toggle="tooltip"]').tooltip();
+			$("[data-toggle='popover']").popover();
+			$("[data-toggle='tooltip']").tooltip();
 		}
 	});
 });
 
 // Toggle Up/Down icon
-$(".toggle").on('click', function(){
+$(".toggle").on("click", function(){
 	$(this).toggleClass("fa-plus-circle fa-minus-circle");
 });
 
