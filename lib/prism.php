@@ -326,23 +326,47 @@ class Prism
     {
         $league = (isset($_GET['league']) ? htmlspecialchars($_GET['league'], ENT_QUOTES, 'UTF-8') : "all");
         $last_played = date('Y-m-d H:i:s', (time() - 12960000));
+        $missing = date('Y-m-d H:i:s', (time() - 2678400));
         if ($league == "admin") {
-            $filter_query = 'admin_role >= 40 AND last_played > "'.$last_played.'" AND guid NOT IN (SELECT guid FROM `ban_list`)';
             $table_foot_text = 'You need at least the Admin Level 40 to appear on this list.';
+            $result = $this->dbQueryList('SELECT * FROM `xlrstats` WHERE admin_role >= 40 AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) ORDER BY kills DESC;', array($last_played));
+            $last_seen = $this->dbQueryList('SELECT id,name,last_played FROM `xlrstats` WHERE admin_role >= 40 AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) ORDER BY last_played DESC LIMIT 5;', array($last_played));
+            $mia = $this->dbQueryList('SELECT id,name,last_played FROM `xlrstats` WHERE admin_role >= 40 AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) AND last_played < ? ORDER BY last_played DESC LIMIT 5;', array($last_played, $missing));
+            $most_kills = $this->dbQueryElement('SELECT id,name,kills FROM `xlrstats` WHERE admin_role >= 40 AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) ORDER BY kills DESC LIMIT 1;', array($last_played));
+            $best_ratio = $this->dbQueryElement('SELECT id,name,ratio FROM `xlrstats` WHERE admin_role >= 40 AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) ORDER BY ratio DESC LIMIT 1;', array($last_played));
+            $highest_streak = $this->dbQueryElement('SELECT id,name,max_kill_streak FROM `xlrstats` WHERE admin_role >= 40 AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) ORDER BY max_kill_streak DESC LIMIT 1;', array($last_played));
+            $most_rounds = $this->dbQueryElement('SELECT id,name,rounds FROM `xlrstats` WHERE admin_role >= 40 AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) ORDER BY rounds DESC LIMIT 1;', array($last_played));
         }
         elseif ($league == "newby") {
-            $filter_query = 'num_played <= 20 AND last_played > "'.$last_played.'" AND guid NOT IN (SELECT guid FROM `ban_list`)';
             $table_foot_text = 'Showing players with 0 to 20 connections.';
+            $result = $this->dbQueryList('SELECT * FROM `xlrstats` WHERE num_played <= 20 AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) ORDER BY kills DESC;', array($last_played));
+            $last_seen = $this->dbQueryList('SELECT id,name,last_played FROM `xlrstats` WHERE num_played <= 20 AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) ORDER BY last_played DESC LIMIT 5;', array($last_played));
+            $mia = $this->dbQueryList('SELECT id,name,last_played FROM `xlrstats` WHERE num_played <= 20 AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) AND last_played < ? ORDER BY last_played DESC LIMIT 5;', array($last_played, $missing));
+            $most_kills = $this->dbQueryElement('SELECT id,name,kills FROM `xlrstats` WHERE num_played <= 20 AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) ORDER BY kills DESC LIMIT 1;', array($last_played));
+            $best_ratio = $this->dbQueryElement('SELECT id,name,ratio FROM `xlrstats` WHERE num_played <= 20 AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) ORDER BY ratio DESC LIMIT 1;', array($last_played));
+            $highest_streak = $this->dbQueryElement('SELECT id,name,max_kill_streak FROM `xlrstats` WHERE num_played <= 20 AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) ORDER BY max_kill_streak DESC LIMIT 1;', array($last_played));
+            $most_rounds = $this->dbQueryElement('SELECT id,name,rounds FROM `xlrstats` WHERE num_played <= 20 AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) ORDER BY rounds DESC LIMIT 1;', array($last_played));
         }
         elseif ($league == "veteran") {
-            $filter_query = 'num_played > 200 AND last_played > "'.$last_played.'" AND guid NOT IN (SELECT guid FROM `ban_list`)';
             $table_foot_text = 'Showing players with at least 200 connections.';
+            $result = $this->dbQueryList('SELECT * FROM `xlrstats` WHERE num_played > 200 AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) ORDER BY kills DESC;', array($last_played));
+            $last_seen = $this->dbQueryList('SELECT id,name,last_played FROM `xlrstats` WHERE num_played > 200 AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) ORDER BY last_played DESC LIMIT 5;', array($last_played));
+            $mia = $this->dbQueryList('SELECT id,name,last_played FROM `xlrstats` WHERE num_played > 200 AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) AND last_played < ? ORDER BY last_played DESC LIMIT 5;', array($last_played, $missing));
+            $most_kills = $this->dbQueryElement('SELECT id,name,kills FROM `xlrstats` WHERE num_played > 200 AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) ORDER BY kills DESC LIMIT 1;', array($last_played));
+            $best_ratio = $this->dbQueryElement('SELECT id,name,ratio FROM `xlrstats` WHERE num_played > 200 AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) ORDER BY ratio DESC LIMIT 1;', array($last_played));
+            $highest_streak = $this->dbQueryElement('SELECT id,name,max_kill_streak FROM `xlrstats` WHERE num_played > 200 AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) ORDER BY max_kill_streak DESC LIMIT 1;', array($last_played));
+            $most_rounds = $this->dbQueryElement('SELECT id,name,rounds FROM `xlrstats` WHERE num_played > 200 AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) ORDER BY rounds DESC LIMIT 1;', array($last_played));
         }
         else {
-            $filter_query = '(rounds > 15 OR kills > 300) AND last_played > "'.$last_played.'" AND guid NOT IN (SELECT guid FROM `ban_list`)';
             $table_foot_text = 'You need at least 15 rounds or 300 kills to appear on this list.';
+            $result = $this->dbQueryList('SELECT * FROM `xlrstats`                      WHERE (rounds > 15 OR kills > 300) AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) ORDER BY kills DESC;', array($last_played));
+            $last_seen = $this->dbQueryList('SELECT id,name,last_played FROM `xlrstats` WHERE (rounds > 15 OR kills > 300) AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) ORDER BY last_played DESC LIMIT 5;', array($last_played));
+            $mia = $this->dbQueryList('SELECT id,name,last_played FROM `xlrstats`       WHERE (rounds > 15 OR kills > 300) AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) AND last_played < ? ORDER BY last_played DESC LIMIT 5;', array($last_played, $missing));
+            $most_kills = $this->dbQueryElement('SELECT id,name,kills FROM `xlrstats`   WHERE (rounds > 15 OR kills > 300) AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) ORDER BY kills DESC LIMIT 1;', array($last_played));
+            $best_ratio = $this->dbQueryElement('SELECT id,name,ratio FROM `xlrstats`   WHERE (rounds > 15 OR kills > 300) AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) ORDER BY ratio DESC LIMIT 1;', array($last_played));
+            $highest_streak = $this->dbQueryElement('SELECT id,name,max_kill_streak FROM `xlrstats` WHERE (rounds > 15 OR kills > 300) AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) ORDER BY max_kill_streak DESC LIMIT 1;', array($last_played));
+            $most_rounds = $this->dbQueryElement('SELECT id,name,rounds FROM `xlrstats` WHERE (rounds > 15 OR kills > 300) AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) ORDER BY rounds DESC LIMIT 1;', array($last_played));
         }
-        $result = $this->dbQueryList('SELECT * FROM `xlrstats` WHERE ' . $filter_query . ' ORDER BY kills DESC;');
         $out ='
       <div class="page-header">
         <h1>Player Statistics</h1>
@@ -422,8 +446,7 @@ class Prism
               </thead>
               <tbody>';
 
-            $result = $this->dbQueryList('SELECT id,name,last_played FROM `xlrstats` WHERE ' . $filter_query . ' ORDER BY last_played DESC LIMIT 5;');
-            foreach($result as $row)
+            foreach($last_seen as $row)
             {
               $out .= '
               <tr>
@@ -449,9 +472,7 @@ class Prism
               <tbody>';
 
             $now = date('Y-m-d H:i:s', time());
-            $mia = date('Y-m-d H:i:s', (time() - 2678400));
-            $result = $this->dbQueryList('SELECT id,name,last_played FROM `xlrstats` WHERE '. $filter_query . ' AND last_played < ? ORDER BY last_played DESC LIMIT 5;', array($mia));
-            foreach($result as $row)
+            foreach($mia as $row)
             {
               $out .= '
               <tr>
@@ -471,10 +492,6 @@ class Prism
         </div>
       </div>';
 
-        $most_kills = $this->dbQueryElement('SELECT id,name,kills FROM `xlrstats` WHERE ' . $filter_query . ' ORDER BY kills DESC LIMIT 1;');
-        $best_ratio = $this->dbQueryElement('SELECT id,name,ratio FROM `xlrstats` WHERE ' . $filter_query . ' ORDER BY ratio DESC LIMIT 1;');
-        $highest_streak = $this->dbQueryElement('SELECT id,name,max_kill_streak FROM `xlrstats` WHERE ' . $filter_query . ' ORDER BY max_kill_streak DESC LIMIT 1;');
-        $most_rounds = $this->dbQueryElement('SELECT id,name,rounds FROM `xlrstats` WHERE ' . $filter_query . ' ORDER BY rounds DESC LIMIT 1;');
         $out .= '
       <hr>
         <div>
