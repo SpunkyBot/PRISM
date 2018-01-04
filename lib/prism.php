@@ -584,10 +584,10 @@ class Prism
         return round((((($result['kills'] - $result['team_kills'] - $result['suicides'])/($result['rounds'])/20*0.75) + ((($result['kills'] - $result['team_kills'])/($result['deaths'] + $result['suicides'] - $result['team_death']))/5*0.75) + ($result['headshots']/($result['rounds'])/10*0.5) + ($result['max_kill_streak']/30*0.5)) * 216) + 1000 + $bonus);
     }
 
-    private function renderPlayerDetailStats($id)
+    private function renderPlayerDetailStats($player_id)
     {
         $geo = geoip_open('./lib/GeoIP.dat',GEOIP_STANDARD);
-        $result = $this->dbQueryElement('SELECT * FROM `xlrstats` WHERE id = ?;', array($id));
+        $result = $this->dbQueryElement('SELECT * FROM `xlrstats` WHERE id = ?;', array($player_id));
         $prettyname = $this->prettyName($result['name']);
         $rankarray = $this->getRank($result['kills']);
         $trophyarray = $this->trophyCalculation($result['kills']);
