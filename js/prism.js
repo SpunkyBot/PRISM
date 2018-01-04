@@ -6,7 +6,7 @@ $(document).ready( function(){
 		"columnDefs": [{"orderable": false, "targets": 4}, {"orderable": false, "targets": 5}, {"orderable": false, "targets": 6}],
 		"lengthMenu": [[15, 30, -1], [15, 30, "All"]], "bLengthChange": false,
 		"fnDrawCallback": function (o) {
-			if ( o._iDisplayStart != oldStart ) {
+			if ( o._iDisplayStart !== oldStart ) {
 				var targetOffset = $("#playerstats").offset().top - 45;
 				$("html,body").animate({scrollTop: targetOffset}, 500);
 				oldStart = o._iDisplayStart;
@@ -21,7 +21,7 @@ $(document).ready( function(){
 		"columnDefs": [{"orderable": false, "targets": 0}, {"orderable": false, "targets": 1}, {"orderable": false, "targets": 2}, {"orderable": false, "targets": 3}, {"orderable": false, "targets": 6}],
 		"lengthMenu": [[25, 50, -1], [25, 50, "All"]], "bLengthChange": false, "searching": false,
 		"fnDrawCallback": function (o) {
-			if ( o._iDisplayStart != oldStart ) {
+			if ( o._iDisplayStart !== oldStart ) {
 				var targetOffset = $("#banlist").offset().top - 45;
 				$("html,body").animate({scrollTop: targetOffset}, 500);
 				oldStart = o._iDisplayStart;
