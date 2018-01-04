@@ -33,16 +33,16 @@ $(document).ready( function(){
 });
 
 // Toggle Up/Down icon
-$('.toggle').on('click', function(){
+$(".toggle").on('click', function(){
 	$(this).toggleClass("fa-plus-circle fa-minus-circle");
 });
 
 // Popovers
 $(document).ready(function(){
-	$('[data-toggle="popover"]').popover(); 
+	$("[data-toggle='popover']").popover();
 });
 
 // Tooltips
 $(function(){
-	$('[data-toggle="tooltip"]').tooltip();
+	$("[data-toggle='tooltip']").tooltip();
 });
