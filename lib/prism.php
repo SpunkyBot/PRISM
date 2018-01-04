@@ -212,16 +212,16 @@ class Prism
         $count = count($players);
         if ($count > 0) 
         {
-          $op = '<ul>';
+          $online_players = '<ul>';
           for ($i = 0; $i < $count; $i++) {
-              $op .= '<li>' . $this->prettyName($players[$i]['name']) . '</li>';
+              $online_players .= '<li>' . $this->prettyName($players[$i]['name']) . '</li>';
           }
-          $op .= '</ul>';
+          $online_players .= '</ul>';
         }
-        else $op = 'Server is empty - no players online';
+        else $online_players = 'Server is empty - no players online';
         if ($count == 0) $out = '<span class="label label-primary label-as-badge">0</span> / ' . $maxvalue;
-        elseif ($count >= $maxvalue) $out = '<span class="label label-danger label-as-badge cursor-pointer" data-toggle="popover" title="Online Players" data-content="' . $op . '" data-html="true" data-placement="left" data-trigger="hover">' . $count . '</span> / ' . $maxvalue;
-        else $out = '<span class="label label-success label-as-badge cursor-pointer" data-toggle="popover" title="Online Players" data-content="' . $op . '" data-html="true" data-placement="left" data-trigger="hover">' . $count . '</span> / '. $maxvalue;
+        elseif ($count >= $maxvalue) $out = '<span class="label label-danger label-as-badge cursor-pointer" data-toggle="popover" title="Online Players" data-content="' . $online_players . '" data-html="true" data-placement="left" data-trigger="hover">' . $count . '</span> / ' . $maxvalue;
+        else $out = '<span class="label label-success label-as-badge cursor-pointer" data-toggle="popover" title="Online Players" data-content="' . $online_players . '" data-html="true" data-placement="left" data-trigger="hover">' . $count . '</span> / '. $maxvalue;
         return $out;
     }
 
@@ -586,7 +586,7 @@ class Prism
 
     private function renderPlayerDetailStats($id)
     {
-        $gi = geoip_open('./lib/GeoIP.dat',GEOIP_STANDARD);
+        $geo = geoip_open('./lib/GeoIP.dat',GEOIP_STANDARD);
         $result = $this->dbQueryElement('SELECT * FROM `xlrstats` WHERE id = ?;', array($id));
         $prettyname = $this->prettyName($result['name']);
         $rankarray = $this->getRank($result['kills']);
@@ -601,7 +601,7 @@ class Prism
         <div>
           <i class="fa fa-user fa-4x fa-border fa-pull-left" data-toggle="tooltip" data-placement="bottom" title="Player ID: ' . $player_detail['id'] . ' | Stats ID: ' . $result['id'] . '"></i>
           <h2>' . $prettyname . '
-          <small class="flag-icon flag-icon-' . strtolower(geoip_country_code_by_addr($gi, $result['ip_address'])) . '" data-toggle="tooltip" data-placement="right" title="' . geoip_country_name_by_addr($gi, $result['ip_address']) . '"></small></h2>
+          <small class="flag-icon flag-icon-' . strtolower(geoip_country_code_by_addr($geo, $result['ip_address'])) . '" data-toggle="tooltip" data-placement="right" title="' . geoip_country_name_by_addr($geo, $result['ip_address']) . '"></small></h2>
           <p>' . ($ban_count['count'] > 0 ? '<span class="label label-as-badge label-danger">Player is banned</span>' : '<strong>' . $this->getRoleName($result['admin_role']) . '</strong>' . ($result['last_played'] < date('Y-m-d H:i:s', (time() - 2678400)) ? ' <span class="label label-as-badge label-danger cursor-pointer" data-toggle="tooltip" data-placement="right" title="Last game: ' . date_diff(date_create($today), date_create($result['last_played']))->format('%a days ago') . '">Missing In Action</span>' : '')) . '</p>
           <p class="small">Registered on ' . date_format(date_create($result['first_seen']), 'F jS, Y G:i A') . '<span class="pull-right">Last seen: ' . date_format(date_create($result['last_played']), 'F jS, G:i') . '</span></p>
         </div>
@@ -723,7 +723,7 @@ class Prism
              </div>
         </div>
       </div>';
-        geoip_close($gi);
+        geoip_close($geo);
         return $out;
     }
 
