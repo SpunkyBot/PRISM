@@ -16,7 +16,7 @@ $(document).ready( function(){
 		}
 	});
 
-	$("#banlist").DataTable( {
+	$("#banlist").dataTable( {
 		"order": [[ 4, "desc" ]],
 		"columnDefs": [{"orderable": false, "targets": 0}, {"orderable": false, "targets": 1}, {"orderable": false, "targets": 2}, {"orderable": false, "targets": 3}, {"orderable": false, "targets": 6}],
 		"lengthMenu": [[25, 50, -1], [25, 50, "All"]], "bLengthChange": false, "searching": false,
