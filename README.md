@@ -1,7 +1,7 @@
 # PRISM
 PRISM - web frontend for Spunky Bot
 
-[![Latest Stable Version](https://img.shields.io/badge/stable-0.9-blue.svg)](https://github.com/SpunkyBot/PRISM/releases)
+[![Latest Stable Version](https://img.shields.io/badge/stable-0.9.2-blue.svg)](https://github.com/SpunkyBot/PRISM/releases)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg)](https://github.com/SpunkyBot/PRISM/blob/master/LICENSE)
 [![Codacy Grade](https://api.codacy.com/project/badge/Grade/9128eca0256b43e0824f657d9d871b46)](https://www.codacy.com/app/SpunkyBot/PRISM)
 
