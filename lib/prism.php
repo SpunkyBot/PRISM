@@ -593,9 +593,9 @@ class Prism
     {
         $bonus = 0;
         if ($result['kills'] > 1000) $bonus += $result['kills'] / 200;
-        if ($result['kills'] < 200) $bonus -= 300 - $result['kills'];
+        if ($result['kills'] < 300) $bonus -= 500 - $result['kills'];
         if ($result['rounds'] > 100) $bonus += $result['rounds'] / 60;
-        if ($result['rounds'] < 30) $bonus -= 101 - $result['rounds'];
+        if ($result['rounds'] < 30) $bonus -= 201 - $result['rounds'];
         if ($result['ratio'] > 1.6) $bonus += $result['ratio'] * 15;
         if ($result['ratio'] < 0.7) $bonus -= $result['ratio'] * 30;
         return round((((($result['kills'] - $result['team_kills'] - $result['suicides'])/($result['rounds'])/20*0.75) + ((($result['kills'] - $result['team_kills'])/($result['deaths'] + $result['suicides'] - $result['team_death']))/5*0.75) + ($result['headshots']/($result['rounds'])/10*0.5) + ($result['max_kill_streak']/30*0.5)) * 216) + 1000 + $bonus);
