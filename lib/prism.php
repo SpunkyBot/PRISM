@@ -141,6 +141,7 @@ class Prism
 
     private function getRoleName($role)
     {
+        $role_name = 'User';
         if ($role == 2) $role_name = 'Regular';
         elseif ($role == 20) $role_name = 'Moderator';
         elseif ($role == 40) $role_name = 'Admin';
@@ -148,7 +149,6 @@ class Prism
         elseif ($role == 80) $role_name = 'Senior Admin';
         elseif ($role == 90) $role_name = 'Super Admin';
         elseif ($role == 100) $role_name = 'Head Admin';
-        else $role_name = 'User';
         return $role_name;
     }
 
