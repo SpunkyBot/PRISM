@@ -291,7 +291,7 @@ class Prism
             for ($i = 0; $i < $total; $i++) {
                 $num = $i + 1;
                 $prettyname = $this->prettyName($players[$i]['name']);
-                $query = $this->dbQuery('SELECT id FROM `xlrstats` WHERE name = ? AND last_played > ?;', $params=array($prettyname, $last_connect));
+                $query = $this->dbQuery('SELECT id FROM `xlrstats` WHERE name = ? AND last_played > ?;', array($prettyname, $last_connect));
                 $out .= ($query['id'] ? '<tr><td>' . $num . '</td><td><a href="./?view=player-stats&id=' . $query['id'] . '">' . $prettyname . '</a></td><td>' . $players[$i]['score'] . '</td>' : '<tr><td>' . $num . '</td><td>' . $prettyname . '</td><td>' . $players[$i]['score'] . '</td>');
                 $out .= ($players[$i]['ping'] == 999 ? '<td>Connecting...</td></tr>' : '<td>' . $players[$i]['ping'] . '</td></tr>');
             }
@@ -585,15 +585,15 @@ class Prism
     private function renderPlayerDetailStats($player_id)
     {
         $geo = geoip_open('./lib/GeoIP.dat',GEOIP_STANDARD);
-        $result = $this->dbQuery('SELECT * FROM `xlrstats` WHERE id = ?;', $params=array($player_id));
+        $result = $this->dbQuery('SELECT * FROM `xlrstats` WHERE id = ?;', array($player_id));
         $prettyname = $this->prettyName($result['name']);
         $rankarray = $this->getRank($result['kills']);
         $trophyarray = $this->trophyCalculation($result['kills']);
         $guid = $result['guid'];
-        $player_detail = $this->dbQuery('SELECT id,aliases FROM `player` WHERE guid = ?;', $params=array($guid));
+        $player_detail = $this->dbQuery('SELECT id,aliases FROM `player` WHERE guid = ?;', array($guid));
         $aliaslist = $this->prettyName($player_detail['aliases']);
         $today = date('Y-m-d H:i:s', time());
-        $ban_count = $this->dbQuery('SELECT COUNT(*) as count FROM `ban_list` WHERE guid = ? AND expires > ?;', $params=array($guid, $today));
+        $ban_count = $this->dbQuery('SELECT COUNT(*) as count FROM `ban_list` WHERE guid = ? AND expires > ?;', array($guid, $today));
         $out = '
       <div class="page-header">
         <div>
@@ -808,7 +808,7 @@ class Prism
       <div>
         <h3>Admins</h3>
         <ul>';
-        $result = $this->dbQuery('SELECT id,name FROM `xlrstats` WHERE admin_role > 20 ORDER BY admin_role DESC, name DESC;', $params=array(), $list=true);
+        $result = $this->dbQuery('SELECT id,name FROM `xlrstats` WHERE admin_role > 20 ORDER BY admin_role DESC, name DESC;', array(), true);
         foreach($result as $row)
         {
             $prettyname = $this->prettyName($row['name']);
