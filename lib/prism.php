@@ -750,7 +750,7 @@ class Prism
       </tr>
       </thead>
       <tbody>';
-        $result = $this->dbQuery('SELECT * FROM `ban_list` ORDER BY timestamp DESC;', $params=array(), $list=true);
+        $result = $this->dbQuery('SELECT * FROM `ban_list` ORDER BY timestamp DESC;', array(), true);
         foreach($result as $row)
         {
             $prettyname = $this->prettyName($row['name']);
@@ -819,7 +819,7 @@ class Prism
         $mout = '
         <h3>Moderators</h3>
         <ul>';
-        $result = $this->dbQuery('SELECT id,name FROM `xlrstats` WHERE admin_role = 20 ORDER BY name DESC;', $params=array(), $list=true);
+        $result = $this->dbQuery('SELECT id,name FROM `xlrstats` WHERE admin_role = 20 ORDER BY name DESC;', array(), true);
         $mod_count = 0;
         foreach($result as $row)
         {
