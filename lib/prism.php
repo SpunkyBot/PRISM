@@ -1,7 +1,7 @@
 <?php
 // PRISM - Web frontend for Spunky Bot - www.spunkybot.de/prism
 // Author: Alexander Kress
-// Version: 0.9.2
+$version = "0.9.2";
 
 // include the GeoIP PHP script - created by MaxMind
 include('geoip.inc');
