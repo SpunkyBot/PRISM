@@ -203,7 +203,7 @@ class Prism
         else $online_players = 'Server is empty - no players online';
         if ($count == 0) $out = '<span class="label label-primary label-as-badge">0</span> / ' . $maxvalue;
         elseif ($count >= $maxvalue) $out = '<span class="label label-danger label-as-badge cursor-pointer" data-toggle="popover" title="Online Players" data-content="' . $online_players . '" data-html="true" data-placement="left" data-trigger="hover">' . $count . '</span> / ' . $maxvalue;
-        else $out = '<span class="label label-success label-as-badge cursor-pointer" data-toggle="popover" title="Online Players" data-content="' . $online_players . '" data-html="true" data-placement="left" data-trigger="hover">' . $count . '</span> / '. $maxvalue;
+        else $out = '<span class="label label-success label-as-badge cursor-default" data-toggle="popover" title="Online Players" data-content="' . $online_players . '" data-html="true" data-placement="left" data-trigger="hover">' . $count . '</span> / '. $maxvalue;
         return $out;
     }
 
