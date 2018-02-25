@@ -774,7 +774,7 @@ class Prism
             </ul>';
             $out .= '
             <tr>
-              <td><i class="toggle fa fa-plus-circle cursor-pointer" data-toggle="popover" title="Ban Details" data-content="' . $ban_details . '" data-html="true" data-placement="right" data-trigger="click"></i></td>
+              <td><a tabindex="0" data-toggle="popover" title="Ban Details" data-content="' . $ban_details . '" data-html="true" data-placement="right" data-trigger="focus"><i class="fa fa-chevron-right cursor-pointer"></i></a></td>
               <td>' . $row['id'] . '</td>
               <td>' . $prettyname . '</td>
               <td><a href="http://www.geoiptool.com/en/?IP=' . $row['ip_address'] . '">' . $row['ip_address'] . '</a></td>

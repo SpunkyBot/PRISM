@@ -33,7 +33,7 @@ $(document).ready( function(){
 });
 
 // Toggle Up/Down icon
-$(".toggle").on("click", function(){
+$(".toggle").on("hover", function(){
 	$(this).toggleClass("fa-plus-circle fa-minus-circle");
 });
 
