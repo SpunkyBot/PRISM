@@ -579,7 +579,7 @@ class Prism
         if ($result['rounds'] < 30) $bonus -= 201 - $result['rounds'];
         if ($result['ratio'] > 1.6) $bonus += $result['ratio'] * 15;
         if ($result['ratio'] < 0.7) $bonus -= $result['ratio'] * 30;
-        return round((((($result['kills'] - $result['team_kills'] - $result['suicides'])/($result['rounds'])/20*0.75) + ((($result['kills'] - $result['team_kills'])/($result['deaths'] + $result['suicides'] - $result['team_death']))/5*0.75) + ($result['headshots']/($result['rounds'])/10*0.5) + ($result['max_kill_streak']/30*0.5)) * 216) + 1000 + $bonus);
+        return ($result['kills'] == 0 ? 300 : round((((($result['kills'] - $result['team_kills'] - $result['suicides'])/($result['rounds'])/20*0.75) + ((($result['kills'] - $result['team_kills'])/($result['deaths'] + $result['suicides'] - $result['team_death']))/5*0.75) + ($result['headshots']/($result['rounds'])/10*0.5) + ($result['max_kill_streak']/30*0.5)) * 216) + 1000 + $bonus));
     }
 
     private function renderPlayerDetailStats($player_id)
