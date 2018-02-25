@@ -11,7 +11,6 @@ class Prism
     private $_db_path;
     private $_host;
     private $_port;
-    private $_socket;
     private $_offline;
     private $_params;
     private $_players;
@@ -22,7 +21,6 @@ class Prism
         $this->_db_path = strval($dbPath);
         $this->_host = strval($host);
         $this->_port = intval($port);
-        $this->_socket = null;
         $this->_offline = false;
         $this->_params = array();
         $this->_players = array();
@@ -44,21 +42,21 @@ class Prism
 
     private function queryServer()
     {
-        $this->_socket = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
-        if ($this->_socket) {
+        $socket = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
+        if ($socket) {
             $timeout = 10;
             $magic = "\377\377\377\377";
             $pattern1 = "/$magic" . "print\n/";
             $pattern2 = "/$magic" . "statusResponse\n/";
 
-            if (socket_set_nonblock($this->_socket)) {
+            if (socket_set_nonblock($socket)) {
                 $time = time();
                 $err = "";
-                while (!socket_connect($this->_socket, $this->_host, $this->_port)) {
-                    $err = socket_last_error($this->_socket);
+                while (!socket_connect($socket, $this->_host, $this->_port)) {
+                    $err = socket_last_error($socket);
                     if ($err == 115 || $err == 114) {
                         if ((time() - $time) >= $timeout) {
-                            $this->disconnect();
+                            socket_close($socket);
                             throw new Exception("Connection timed out.");
                         }
                         sleep(1);
@@ -66,19 +64,19 @@ class Prism
                     }
                 }
                 if (strlen($err) == 0) {
-                    socket_write($this->_socket, $magic . "getstatus\n");
-                    $read = array($this->_socket);
+                    socket_write($socket, $magic . "getstatus\n");
+                    $read = array($socket);
                     $out = "";
                     $null = NULL;
                     while (socket_select($read, $null, $null, 1)) {
-                        $out .= socket_read($this->_socket, 8192, PHP_BINARY_READ);
+                        $out .= socket_read($socket, 8192, PHP_BINARY_READ);
                     }
-                    if ($out == "") {
+                    if (!$out) {
                         $this->_offline = true;
-                        $this->disconnect();
+                        socket_close($socket);
                         throw new Exception("Unable to connect to server.");
                     }
-                    $this->disconnect();
+                    socket_close($socket);
 
                     $out = preg_replace($pattern1, "", $out);
                     $out = preg_replace($pattern2, "", $out);
@@ -105,11 +103,6 @@ class Prism
                 } else throw new Exception("Unable to connect to server.");
             } else throw new Exception("Unable to connect to server.");
         } else throw new Exception("The server is DOWN!");
-    }
-
-    private function disconnect()
-    {
-        socket_close($this->_socket);
     }
 
     private function prettyName($name)
