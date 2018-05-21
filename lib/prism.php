@@ -566,11 +566,14 @@ class Prism
     private function skillCalculation($result)
     {
         $bonus = 0;
-        if ($result['kills'] > 1000) $bonus += $result['kills'] / 200;
+        if ($result['kills'] > 1000 and $result['kills'] <= 20000) $bonus += $result['kills'] / 200;
+        if ($result['kills'] > 20000) $bonus += 150;
         if ($result['kills'] < 300) $bonus -= 500 - $result['kills'];
-        if ($result['rounds'] > 100) $bonus += $result['rounds'] / 60;
+        if ($result['rounds'] > 100 and $result['rounds'] <= 3000) $bonus += $result['rounds'] / 50;
+        if ($result['rounds'] > 3000) $bonus += 80;
         if ($result['rounds'] < 30) $bonus -= 201 - $result['rounds'];
-        if ($result['ratio'] > 1.6) $bonus += $result['ratio'] * 15;
+        if ($result['ratio'] > 1.6 and $result['ratio'] <= 5.0 ) $bonus += $result['ratio'] * 15;
+        if ($result['ratio'] > 5.0) $bonus += 100;
         if ($result['ratio'] < 0.7) $bonus -= $result['ratio'] * 30;
         return ($result['kills'] == 0 ? 300 : round((((($result['kills'] - $result['team_kills'] - $result['suicides'])/($result['rounds'])/20*0.75) + ((($result['kills'] - $result['team_kills'])/($result['deaths'] + $result['suicides'] - $result['team_death']))/5*0.75) + ($result['headshots']/($result['rounds'])/10*0.5) + ($result['max_kill_streak']/30*0.5)) * 216) + 1000 + $bonus));
     }
