@@ -739,7 +739,6 @@ class Prism
         <th></th>
         <th>ID</th>
         <th>Client</th>
-        <th>IP address</th>
         <th>Added</th>
         <th>Expires</th>
         <th>Reason</th>
@@ -773,7 +772,6 @@ class Prism
               <td><a tabindex="0" data-toggle="popover" title="Ban Details" data-content="' . $ban_details . '" data-html="true" data-placement="right" data-trigger="focus"><i class="fa fa-chevron-right cursor-pointer"></i></a></td>
               <td>' . $row['id'] . '</td>
               <td>' . $prettyname . '</td>
-              <td><a href="http://www.geoiptool.com/en/?IP=' . $row['ip_address'] . '">' . $row['ip_address'] . '</a></td>
               <td>' . $row['timestamp'] . '</td>
               <td>' . $expiration . '</td>
               <td>' . htmlspecialchars($row['reason'], ENT_QUOTES, 'UTF-8') . '</td>
