@@ -17,8 +17,8 @@ $(document).ready( function(){
 	});
 
 	$("#banlist").dataTable( {
-		"order": [[ 4, "desc" ]],
-		"columnDefs": [{"orderable": false, "targets": 0}, {"orderable": false, "targets": 1}, {"orderable": false, "targets": 2}, {"orderable": false, "targets": 3}, {"orderable": false, "targets": 6}],
+		"order": [[ 3, "desc" ]],
+		"columnDefs": [{"orderable": false, "targets": 0}, {"orderable": false, "targets": 1}, {"orderable": false, "targets": 2}, {"orderable": false, "targets": 5}],
 		"lengthMenu": [[25, 50, -1], [25, 50, "All"]], "bLengthChange": false, "searching": false,
 		"fnDrawCallback": function (o) {
 			if ( o._iDisplayStart !== oldStart ) {
