@@ -41,9 +41,9 @@
         </div>
         <div class="navbar-collapse collapse navbar-right">
           <ul class="nav navbar-nav">
-            <li<?php echo ($page == 'home') ? " class='active'" : ""; ?>><a href="./">SERVER</a></li>
-            <li<?php echo ($page == 'player-stats') ? " class='active'" : ""; ?>><a href="./?view=player-stats">PLAYER STATS</a></li>
-            <li<?php echo ($page == 'banlist') ? " class='active'" : ""; ?>><a href="./?view=banlist">BANLIST</a></li>
+            <li<?php echo (htmlspecialchars($page, ENT_QUOTES, 'UTF-8') == 'home') ? " class='active'" : ""; ?>><a href="./">SERVER</a></li>
+            <li<?php echo (htmlspecialchars($page, ENT_QUOTES, 'UTF-8') == 'player-stats') ? " class='active'" : ""; ?>><a href="./?view=player-stats">PLAYER STATS</a></li>
+            <li<?php echo (htmlspecialchars($page, ENT_QUOTES, 'UTF-8') == 'banlist') ? " class='active'" : ""; ?>><a href="./?view=banlist">BANLIST</a></li>
             <li class="dropdown">
               <a class="dropdown-toggle" role="button" href="#" data-toggle="dropdown">ABOUT <span class="caret"></span></a>
               <ul class="dropdown-menu">
