@@ -1,5 +1,5 @@
 <?php
-// PRISM - Web frontend for Spunky Bot - www.spunkybot.de/prism
+// PRISM - Web frontend for Spunky Bot
 // Author: Alexander Kress
 $version = "0.9.2";
 
