@@ -192,7 +192,7 @@ class Prism
         {
           $online_players = '<ul>';
           for ($i = 0; $i < $count; $i++) {
-              $online_players .= '<li>' . $this->prettyName($players[$i]['name']) . '</li>';
+              $online_players .= '<li>[' . ($i+1) . '] ' . $this->prettyName($players[$i]['name']) . '</li>';
           }
           $online_players .= '</ul>';
         }
@@ -276,7 +276,7 @@ class Prism
           <table class="table table-hover">
             <thead>
             <tr>
-              <th>#</th><th>NAME</th><th>SCORE</th><th>PING</th>
+              <th>RANK</th><th>NAME</th><th>SCORE</th><th>PING</th>
             </tr>
             </thead>
             <tbody>';
@@ -285,10 +285,10 @@ class Prism
         if ($total > 0) {
             $last_connect = date('Y-m-d H:i:s', (time() - 7200));
             for ($i = 0; $i < $total; $i++) {
-                $num = $i + 1;
+                $rank = $i + 1;
                 $prettyname = $this->prettyName($players[$i]['name']);
-                $query = $this->dbQuery('SELECT id FROM `xlrstats` WHERE name = ? AND last_played > ?;', array($prettyname, $last_connect));
-                $out .= ($query['id'] ? '<tr><td>' . $num . '</td><td><a href="./?view=player-stats&id=' . $query['id'] . '">' . $prettyname . '</a></td><td>' . $players[$i]['score'] . '</td>' : '<tr><td>' . $num . '</td><td>' . $prettyname . '</td><td>' . $players[$i]['score'] . '</td>');
+                $query = $this->dbQuery('SELECT [id] FROM `xlrstats` WHERE name = ? AND last_played > ?;', array($prettyname, $last_connect));
+                $out .= ($query[0] ? '<tr><td>' . $rank . '</td><td><a href="./?view=player-stats&id=' . $query[0] . '">' . $prettyname . '</a></td><td>' . $players[$i]['score'] . '</td>' : '<tr><td>' . $rank . '</td><td>' . $prettyname . '</td><td>' . $players[$i]['score'] . '</td>');
                 $out .= ($players[$i]['ping'] == 999 ? '<td>Connecting...</td></tr>' : '<td>' . $players[$i]['ping'] . '</td></tr>');
             }
         }
