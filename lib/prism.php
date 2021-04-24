@@ -280,7 +280,9 @@ class Prism
             </tr>
             </thead>
             <tbody>';
-
+        usort($players, function($b, $a) {
+            return $a['score'] - $b['score'];
+        });
         $total = count($players);
         if ($total > 0) {
             $last_connect = date('Y-m-d H:i:s', (time() - 7200));
