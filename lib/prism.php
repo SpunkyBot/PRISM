@@ -385,6 +385,7 @@ class Prism
         $best_efficiency_id = "";
         $best_efficiency_name = "";
 
+        if (is_array($result) || is_object($result)) {
         foreach($result as $row)
         {
           $prettyname = $this->prettyName($row['name']);
