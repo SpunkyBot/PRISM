@@ -47,63 +47,36 @@ class Prism
     {
         $socket = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
         if ($socket) {
-            $timeout = 10;
-            $magic = "\377\377\377\377";
-            $pattern1 = "/$magic" . "print\n/";
-            $pattern2 = "/$magic" . "statusResponse\n/";
-
-            if (socket_set_nonblock($socket)) {
-                $time = time();
-                $err = "";
-                while (!socket_connect($socket, $this->_host, $this->_port)) {
-                    $err = socket_last_error($socket);
-                    if ($err == 115 || $err == 114) {
-                        if ((time() - $time) >= $timeout) {
-                            socket_close($socket);
-                            throw new Exception("Connection timed out.");
-                        }
-                        sleep(1);
-                        continue;
-                    }
-                }
-                if (strlen($err) == 0) {
-                    socket_write($socket, $magic . "getstatus\n");
-                    $read = array($socket);
-                    $out = "";
-                    $null = NULL;
-                    while (socket_select($read, $null, $null, 1)) {
-                        $out .= socket_read($socket, 8192, PHP_BINARY_READ);
-                    }
-                    if (!$out) {
-                        $this->_offline = true;
-                        socket_close($socket);
-                        throw new Exception("Unable to connect to server.");
-                    }
+            socket_set_option($socket, SOL_SOCKET, SO_RCVTIMEO, array('sec' => 3, 'usec' => 0));
+            socket_set_option($socket, SOL_SOCKET, SO_SNDTIMEO, array('sec' => 3, 'usec' => 0));
+            if (socket_connect($socket, $this->_host, $this->_port)) {
+                socket_write($socket, "\xFF\xFF\xFF\xFFgetstatus\n");
+                $out = socket_read($socket, 2048, PHP_BINARY_READ);
+                if (!$out) {
+                    $this->_offline = true;
                     socket_close($socket);
-
-                    $out = preg_replace($pattern1, "", $out);
-                    $out = preg_replace($pattern2, "", $out);
-                    $all = explode("\n", $out);
-                    $this->_params = explode("\\", $all[0]);
-                    array_shift($this->_params);
-                    $temp = count($this->_params);
-                    for ($i = 0; $i < $temp; $i++) {
-                        $this->_params[strtolower($this->_params[$i])] = $this->_params[++$i];
-                    }
-                    $temp = count($all);
-                    for ($i = 1; $i < $temp - 1; $i++) {
-                        $pos = strpos($all[$i], " ");
-                        $score = substr($all[$i], 0, $pos);
-                        $pos2 = strpos($all[$i], " ", $pos + 1);
-                        $ping = substr($all[$i], $pos + 1, $pos2 - $pos - 1);
-                        $name = substr($all[$i], $pos2 + 2);
-                        $name = substr($name, 0, strlen($name) - 1);
-                        $player = array("name" => $name,
-                            "score" => intval($score),
-                            "ping" => intval($ping));
-                        $this->_players[] = $player;
-                    }
-                } else throw new Exception("Unable to connect to server.");
+                    throw new Exception("Unable to connect to server.");
+                }
+                socket_close($socket);
+                $out = preg_replace("/\xFF\xFF\xFF\xFFstatusResponse\n/", "", $out);
+                $all = explode("\n", $out);
+                $this->_params = explode("\\", $all[0]);
+                array_shift($this->_params);
+                $temp = count($this->_params);
+                for ($i = 0; $i < $temp; $i++) {
+                    $this->_params[strtolower($this->_params[$i])] = $this->_params[++$i];
+                }
+                $temp = count($all);
+                for ($i = 1; $i < $temp - 1; $i++) {
+                    $pos = strpos($all[$i], " ");
+                    $score = substr($all[$i], 0, $pos);
+                    $pos2 = strpos($all[$i], " ", $pos + 1);
+                    $ping = substr($all[$i], $pos + 1, $pos2 - $pos - 1);
+                    $name = substr($all[$i], $pos2 + 2);
+                    $name = substr($name, 0, strlen($name) - 1);
+                    $player = array("name" => $name, "score" => intval($score), "ping" => intval($ping));
+                    $this->_players[] = $player;
+                }
             } else throw new Exception("Unable to connect to server.");
         } else throw new Exception("The server is DOWN!");
     }
