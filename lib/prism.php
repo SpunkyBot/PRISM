@@ -211,9 +211,9 @@ class Prism
         } catch (Exception $ex) {
             $out .= '<div class="alert alert-danger"><strong>Error!</strong> ' . $ex->getMessage() . '</div>';
         }
-        $totalkills = $this->dbQuery('SELECT sum(kills) as sum FROM `xlrstats`;');
-        $unique = $this->dbQuery('SELECT COUNT(*) as count FROM `player`;');
-        $publicslots = $this->getGameParams('sv_maxclients') - $this->getGameParams('sv_privateclients');
+        $totalkills = array("sum" => $this->dbQuery('SELECT sum(kills) as sum FROM `xlrstats`;'));
+        $unique = array("count" => $this->dbQuery('SELECT COUNT(*) as count FROM `player`;'));
+        $publicslots = (int)$this->getGameParams('sv_maxclients') - (int)$this->getGameParams('sv_privateclients');
         $players = $this->_players;
         $out .= '
         <div class="well well-sm text-center">
@@ -497,7 +497,7 @@ class Prism
                   <i class="fa fa-trophy fa-3x fa-border"></i>
                 </div>
                 <div class="panel-footer">
-                  <strong><a href="?view=player-stats&id=' . $most_kills['id'] . '">' . $this->prettyName($most_kills['name']) . '</a></strong><br/><small>Most kills: ' . $most_kills['kills'] . '</small>
+                  <strong><a href="?view=player-stats&id=' . $most_kills[0] . '">' . $this->prettyName($most_kills[1]) . '</a></strong><br/><small>Most kills: ' . $most_kills[2] . '</small>
                 </div>
               </div>
             </div>
@@ -510,7 +510,7 @@ class Prism
                   <i class="fa fa-trophy fa-3x fa-border"></i>
                 </div>
                 <div class="panel-footer">
-                  <strong><a href="?view=player-stats&id=' . $best_ratio['id'] . '">' . $this->prettyName($best_ratio['name']) . '</a></strong><br/><small>Best Ratio: ' . $best_ratio['ratio'] . '</small>
+                  <strong><a href="?view=player-stats&id=' . $best_ratio[0] . '">' . $this->prettyName($best_ratio[1]) . '</a></strong><br/><small>Best Ratio: ' . $best_ratio[2] . '</small>
                 </div>
               </div>
             </div>
@@ -523,7 +523,7 @@ class Prism
                   <i class="fa fa-trophy fa-3x fa-border"></i>
                 </div>
                 <div class="panel-footer">
-                  <strong><a href="?view=player-stats&id=' . $highest_streak['id'] . '">' . $this->prettyName($highest_streak['name']) . '</a></strong><br/><small>Highest streak: ' . $highest_streak['max_kill_streak'] . '</small>
+                  <strong><a href="?view=player-stats&id=' . $highest_streak[0] . '">' . $this->prettyName($highest_streak[1]) . '</a></strong><br/><small>Highest streak: ' . $highest_streak[2] . '</small>
                 </div>
               </div>
             </div>
@@ -536,7 +536,7 @@ class Prism
                   <i class="fa fa-trophy fa-3x fa-border"></i>
                 </div>
                 <div class="panel-footer">
-                  <strong><a href="?view=player-stats&id=' . $most_rounds['id'] . '">' . $this->prettyName($most_rounds['name']) . '</a></strong><br/><small>Most rounds played: ' . $most_rounds['rounds'] . '</small>
+                  <strong><a href="?view=player-stats&id=' . $most_rounds[0] . '">' . $this->prettyName($most_rounds[1]) . '</a></strong><br/><small>Most rounds played: ' . $most_rounds[2] . '</small>
                 </div>
               </div>
             </div>
@@ -751,6 +751,7 @@ class Prism
       </thead>
       <tbody>';
         $result = $this->dbQuery('SELECT * FROM `ban_list` ORDER BY timestamp DESC;', array(), true);
+        if (is_array($result) || is_object($result)) {
         foreach($result as $row)
         {
             $prettyname = $this->prettyName($row['name']);
@@ -782,6 +783,7 @@ class Prism
               <td>' . htmlspecialchars($row['reason'], ENT_QUOTES, 'UTF-8') . '</td>
             </tr>';
         }
+        }
         $out .= '
       </tbody>
       </table>';
@@ -808,10 +810,12 @@ class Prism
         <h3>Admins</h3>
         <ul>';
         $result = $this->dbQuery('SELECT id,name FROM `xlrstats` WHERE admin_role > 20 ORDER BY admin_role DESC, name DESC;', array(), true);
+        if (is_array($result) || is_object($result)) {
         foreach($result as $row)
         {
             $prettyname = $this->prettyName($row['name']);
             $out .= '<li><a href="./?view=player-stats&id=' . $row['id'] . '">' . $prettyname . '</a></li>';
+        }
         }
         $out .= '
         </ul>';
@@ -820,11 +824,13 @@ class Prism
         <ul>';
         $result = $this->dbQuery('SELECT id,name FROM `xlrstats` WHERE admin_role = 20 ORDER BY name DESC;', array(), true);
         $mod_count = 0;
+        if (is_array($result) || is_object($result)) {
         foreach($result as $row)
         {
             $prettyname = $this->prettyName($row['name']);
             $mout .= '<li><a href="./?view=player-stats&id=' . $row['id'] . '">' . $prettyname . '</a></li>';
             $mod_count++;
+        }
         }
         $mout .= '
         </ul>';
