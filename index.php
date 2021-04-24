@@ -13,11 +13,11 @@ require('./lib/prism.php');
 $page_render = new Prism($dbPath, $ip, $port);
 
 if ($page == 'player-stats') echo $page_render->renderPlayerStats();
-elseif (htmlspecialchars($page, ENT_QUOTES, 'UTF-8') == 'banlist') echo $page_render->renderBanlist();
-elseif (htmlspecialchars($page, ENT_QUOTES, 'UTF-8') == 'staff') echo $page_render->renderStaff();
-elseif (htmlspecialchars($page, ENT_QUOTES, 'UTF-8') == 'about') require_once("about.php");
-elseif (htmlspecialchars($page, ENT_QUOTES, 'UTF-8') == 'commands') require_once("commands.php");
-elseif (htmlspecialchars($page, ENT_QUOTES, 'UTF-8') == 'rules') require_once("rules.php");
+elseif ($page == 'banlist') echo $page_render->renderBanlist();
+elseif ($page == 'staff') echo $page_render->renderStaff();
+elseif ($page == 'about') require_once("about.php");
+elseif ($page == 'commands') require_once("commands.php");
+elseif ($page == 'rules') require_once("rules.php");
 else echo $page_render->renderDashboard();
 
 // HTML Footer
