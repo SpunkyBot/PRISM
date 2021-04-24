@@ -306,6 +306,11 @@ class Prism
         $league = (isset($_GET['league']) ? htmlspecialchars($_GET['league'], ENT_QUOTES, 'UTF-8') : "all");
         $last_played = date('Y-m-d H:i:s', (time() - 12960000));
         $missing = date('Y-m-d H:i:s', (time() - 2678400));
+        $most_rounds = array("","",0);
+        $most_kills = array("","",0);
+        $best_ratio = array("","",0);
+        $highest_streak = array("","",0);
+
         if ($league == "admin") {
             $table_foot_text = 'You need at least the Admin Level 40 to appear on this list.';
             $result = $this->dbQuery('SELECT * FROM `xlrstats` WHERE admin_role >= 40 AND last_played > ? AND guid NOT IN (SELECT guid FROM `ban_list`) ORDER BY kills DESC;', array($last_played), true);
@@ -374,11 +379,11 @@ class Prism
           <tbody>';
         $rank = 0;
         $highest_skill = 800;
-        $highest_skill_id = 1;
-        $highest_skill_name = "World";
-        $best_efficiency = 1;
-        $best_efficiency_id = 1;
-        $best_efficiency_name = "World";
+        $highest_skill_id = "";
+        $highest_skill_name = "";
+        $best_efficiency = 0;
+        $best_efficiency_id = "";
+        $best_efficiency_name = "";
 
         foreach($result as $row)
         {
