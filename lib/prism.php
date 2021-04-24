@@ -262,7 +262,7 @@ class Prism
             for ($i = 0; $i < $total; $i++) {
                 $rank = $i + 1;
                 $prettyname = $this->prettyName($players[$i]['name']);
-                $query = $this->dbQuery('SELECT [id] FROM `xlrstats` WHERE name = ? AND last_played > ?;', array($prettyname, $last_connect));
+                $query = $this->dbQuery('SELECT id FROM `xlrstats` WHERE name = ? AND last_played > ?;', array($prettyname, $last_connect));
                 $out .= ($query[0] ? '<tr><td>' . $rank . '</td><td><a href="./?view=player-stats&id=' . $query[0] . '">' . $prettyname . '</a></td><td>' . $players[$i]['score'] . '</td>' : '<tr><td>' . $rank . '</td><td>' . $prettyname . '</td><td>' . $players[$i]['score'] . '</td>');
                 $out .= ($players[$i]['ping'] == 999 ? '<td>Connecting...</td></tr>' : '<td>' . $players[$i]['ping'] . '</td></tr>');
             }
