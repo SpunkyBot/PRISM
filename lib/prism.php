@@ -563,6 +563,16 @@ class Prism
         </div>';
         return $out;
     }
+    else
+        {
+           $out .= '
+          </tbody>
+          </table>
+        </div>
+      </div>';
+        return $out;
+        }
+    }
 
     private function trophyCalculation($kills)
     {
