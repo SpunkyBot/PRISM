@@ -184,8 +184,8 @@ class Prism
         } catch (Exception $ex) {
             $out .= '<div class="alert alert-danger"><strong>Error!</strong> ' . $ex->getMessage() . '</div>';
         }
-        $totalkills = array("sum" => $this->dbQuery('SELECT sum(kills) as sum FROM `xlrstats`;'));
-        $unique = array("count" => $this->dbQuery('SELECT COUNT(*) as count FROM `player`;'));
+        $totalkills = $this->dbQuery('SELECT sum(kills) as sum FROM `xlrstats`;');
+        $unique = $this->dbQuery('SELECT COUNT(*) as count FROM `player`;');
         $publicslots = (int)$this->getGameParams('sv_maxclients') - (int)$this->getGameParams('sv_privateclients');
         $players = $this->_players;
         $out .= '
@@ -222,7 +222,7 @@ class Prism
             <div class="well well-sm">
               <div class="row">
                 <div class="col-xs-2"><i class="fa fa-user fa-3x"></i></div>
-                <div class="col-xs-10 text-right"><strong>TOTAL UNIQUE PLAYERS</strong><br/>' . $this->numMajorZero($unique['count']) . '</div>
+                <div class="col-xs-10 text-right"><strong>TOTAL UNIQUE PLAYERS</strong><br/>' . $this->numMajorZero($unique[0]) . '</div>
               </div>
             </div>
           </div>
@@ -230,7 +230,7 @@ class Prism
             <div class="well well-sm">
               <div class="row">
                 <div class="col-xs-2"><i class="fa fa-dot-circle-o fa-3x"></i></div>
-                <div class="col-xs-10 text-right"><strong>KILLED</strong><br/>' . $this->numMajorZero($totalkills['sum']) . '</div>
+                <div class="col-xs-10 text-right"><strong>KILLED</strong><br/>' . $this->numMajorZero($totalkills[0]) . '</div>
               </div>
             </div>
           </div>
@@ -595,7 +595,7 @@ class Prism
           <i class="fa fa-user fa-4x fa-border fa-pull-left" data-toggle="tooltip" data-placement="bottom" title="Player ID: ' . $player_detail['id'] . ' | Stats ID: ' . $result['id'] . '"></i>
           <h2>' . $prettyname . '
           <small class="flag-icon flag-icon-' . strtolower(geoip_country_code_by_addr($geo, $result['ip_address'])) . '" data-toggle="tooltip" data-placement="right" title="' . geoip_country_name_by_addr($geo, $result['ip_address']) . '"></small></h2>
-          <p>' . ($ban_count['count'] > 0 ? '<span class="label label-as-badge label-danger">Player is banned</span>' : '<strong>' . $this->getRoleName($result['admin_role']) . '</strong>' . ($result['last_played'] < date('Y-m-d H:i:s', (time() - 2678400)) ? ' <span class="label label-as-badge label-danger cursor-default" data-toggle="tooltip" data-placement="right" title="Last game: ' . date_diff(date_create($today), date_create($result['last_played']))->format('%a days ago') . '">Missing In Action</span>' : '')) . '</p>
+          <p>' . ($ban_count[0] > 0 ? '<span class="label label-as-badge label-danger">Player is banned</span>' : '<strong>' . $this->getRoleName($result['admin_role']) . '</strong>' . ($result['last_played'] < date('Y-m-d H:i:s', (time() - 2678400)) ? ' <span class="label label-as-badge label-danger cursor-default" data-toggle="tooltip" data-placement="right" title="Last game: ' . date_diff(date_create($today), date_create($result['last_played']))->format('%a days ago') . '">Missing In Action</span>' : '')) . '</p>
           <p class="small">Registered on ' . date_format(date_create($result['first_seen']), 'F jS, Y G:i A') . '<span class="pull-right">Last seen: ' . date_format(date_create($result['last_played']), 'F jS, G:i') . '</span></p>
         </div>
       </div>
