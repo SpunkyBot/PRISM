@@ -3,6 +3,9 @@
 // Author: Alexander Kress
 $version = "0.9.2";
 
+// define error level
+error_reporting(E_ERROR | E_WARNING | E_PARSE);
+
 // include the GeoIP PHP script - created by MaxMind
 include('geoip.inc');
 
