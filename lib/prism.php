@@ -249,7 +249,7 @@ class Prism
             <div class="well well-sm">
               <div class="row">
                 <div class="col-xs-2"><i class="fa fa-user fa-3x"></i></div>
-                <div class="col-xs-10 text-right"><strong>TOTAL UNIQUE PLAYERS</strong><br/>' . number_format($unique['count'], 0, '', '.') . '</div>
+                <div class="col-xs-10 text-right"><strong>TOTAL UNIQUE PLAYERS</strong><br/>' . $this->numMajorZero($unique['count']) . '</div>
               </div>
             </div>
           </div>
@@ -257,7 +257,7 @@ class Prism
             <div class="well well-sm">
               <div class="row">
                 <div class="col-xs-2"><i class="fa fa-dot-circle-o fa-3x"></i></div>
-                <div class="col-xs-10 text-right"><strong>KILLED</strong><br/>' . number_format($totalkills['sum'], 0, '', '.') . '</div>
+                <div class="col-xs-10 text-right"><strong>KILLED</strong><br/>' . $this->numMajorZero($totalkills['sum']) . '</div>
               </div>
             </div>
           </div>
@@ -396,7 +396,7 @@ class Prism
           elseif ($row['admin_role'] == 2) $icon = "fa-user";
           elseif ($row['admin_role'] == 20) $icon = "fa-user-circle-o";
           if ($skill > $highest_skill) { $highest_skill = $skill; $highest_skill_name = $prettyname; $highest_skill_id = $row['id']; }
-          $efficiency = $row['kills'] / $row['rounds'];
+          if ($row['rounds'] > 0) { $efficiency = $row['kills'] / $row['rounds']; } else { $efficiency = 0; }
           if ($efficiency > $best_efficiency) { $best_efficiency = $efficiency; $best_efficiency_name = $prettyname; $best_efficiency_id = $row['id']; }
           $rank++;
           $out .= '
@@ -572,6 +572,11 @@ class Prism
       </div>';
         return $out;
         }
+    }
+
+    private function numMajorZero($val)
+    {
+        if ($val > 0) { return number_format((int)$val, 0, '', '.'); } else { return 0; }
     }
 
     private function trophyCalculation($kills)
