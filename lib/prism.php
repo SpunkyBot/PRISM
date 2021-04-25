@@ -746,37 +746,37 @@ class Prism
       <tbody>';
         $result = $this->dbQuery('SELECT * FROM `ban_list` ORDER BY timestamp DESC;', array(), true);
         if (is_array($result) || is_object($result)) {
-        foreach($result as $row)
-        {
-            $prettyname = $this->prettyName($row['name']);
-            $expiration = $row['expires'];
-            $type = "TempBan";
-            $duration = $this->timeDiff($row['timestamp'], $row['expires']) . ' seconds';
-            $exp_format = date_format(date_create($row['expires']), 'F jS, Y G:i A');
-            if (($expiration - $row['timestamp']) >= 20) { $expiration = "<span class='label label-danger'>never</span>"; $type = "PermBan"; $duration = 'permanent'; $exp_format = 'never'; }
-            list ($reason, $admin) = explode(", ban by ", $row['reason']);
-            $rdic = array('tk' => 'stop team killing!', 'wh' => 'wallhack', 'aim' => 'aimbot', 'sk' => 'stop spawn killing!', 'tempban' => 'temporary ban');
-            if ($rdic[$reason]) { $retval = $rdic[$reason]; $keyword = $reason;} else {$retval = $reason; $keyword ='None';}
-            $ban_details = '<p>Penalty issued to <strong>' . $row['name'] . '</strong></br>on ' . date_format(date_create($row['timestamp']), 'F jS, Y G:i A') . '</p>
-            <ul>
-              <li>Ban ID: ' . $row['id'] . '</li>
-              <li>Type: ' . $type . '</li>
-              <li>Reason: ' . $retval  . '</li>
-              <li>Duration: ' . $duration . '</li>
-              <li>Admin: ' . ($admin ?: 'Bot') . '</li>
-              <li>Keyword: ' . $keyword  . '</li>
-              <li>Expiration: ' . $exp_format  . '</li>
-            </ul>';
-            $out .= '
-            <tr>
-              <td class="text-center"><a tabindex="0" data-toggle="popover" title="Ban Details" data-content="' . $ban_details . '" data-html="true" data-placement="right" data-trigger="focus"><i class="fa fa-info-circle cursor-pointer"></i></a></td>
-              <td>' . $row['id'] . '</td>
-              <td>' . $prettyname . '</td>
-              <td>' . $row['timestamp'] . '</td>
-              <td>' . $expiration . '</td>
-              <td>' . htmlspecialchars($row['reason'], ENT_QUOTES, 'UTF-8') . '</td>
-            </tr>';
-        }
+            foreach($result as $row)
+            {
+                $prettyname = $this->prettyName($row['name']);
+                $expiration = $row['expires'];
+                $type = "TempBan";
+                $duration = $this->timeDiff($row['timestamp'], $row['expires']) . ' seconds';
+                $exp_format = date_format(date_create($row['expires']), 'F jS, Y G:i A');
+                if (($expiration - $row['timestamp']) >= 20) { $expiration = "<span class='label label-danger'>never</span>"; $type = "PermBan"; $duration = 'permanent'; $exp_format = 'never'; }
+                list ($reason, $admin) = explode(", ban by ", $row['reason']);
+                $rdic = array('tk' => 'stop team killing!', 'wh' => 'wallhack', 'aim' => 'aimbot', 'sk' => 'stop spawn killing!', 'tempban' => 'temporary ban');
+                if ($rdic[$reason]) { $retval = $rdic[$reason]; $keyword = $reason;} else {$retval = $reason; $keyword ='None';}
+                $ban_details = '<p>Penalty issued to <strong>' . $row['name'] . '</strong></br>on ' . date_format(date_create($row['timestamp']), 'F jS, Y G:i A') . '</p>
+                <ul>
+                  <li>Ban ID: ' . $row['id'] . '</li>
+                  <li>Type: ' . $type . '</li>
+                  <li>Reason: ' . $retval  . '</li>
+                  <li>Duration: ' . $duration . '</li>
+                  <li>Admin: ' . ($admin ?: 'Bot') . '</li>
+                  <li>Keyword: ' . $keyword  . '</li>
+                  <li>Expiration: ' . $exp_format  . '</li>
+                </ul>';
+                $out .= '
+                <tr>
+                  <td class="text-center"><a tabindex="0" data-toggle="popover" title="Ban Details" data-content="' . $ban_details . '" data-html="true" data-placement="right" data-trigger="focus"><i class="fa fa-info-circle cursor-pointer"></i></a></td>
+                  <td>' . $row['id'] . '</td>
+                  <td>' . $prettyname . '</td>
+                  <td>' . $row['timestamp'] . '</td>
+                  <td>' . $expiration . '</td>
+                  <td>' . htmlspecialchars($row['reason'], ENT_QUOTES, 'UTF-8') . '</td>
+                </tr>';
+            }
         }
         $out .= '
       </tbody>
@@ -805,11 +805,11 @@ class Prism
         <ul>';
         $result = $this->dbQuery('SELECT id,name FROM `xlrstats` WHERE admin_role > 20 ORDER BY admin_role DESC, name DESC;', array(), true);
         if (is_array($result) || is_object($result)) {
-        foreach($result as $row)
-        {
-            $prettyname = $this->prettyName($row['name']);
-            $out .= '<li><a href="./?view=player-stats&id=' . $row['id'] . '">' . $prettyname . '</a></li>';
-        }
+            foreach($result as $row)
+            {
+                $prettyname = $this->prettyName($row['name']);
+                $out .= '<li><a href="./?view=player-stats&id=' . $row['id'] . '">' . $prettyname . '</a></li>';
+            }
         }
         $out .= '
         </ul>';
@@ -819,12 +819,12 @@ class Prism
         $result = $this->dbQuery('SELECT id,name FROM `xlrstats` WHERE admin_role = 20 ORDER BY name DESC;', array(), true);
         $mod_count = 0;
         if (is_array($result) || is_object($result)) {
-        foreach($result as $row)
-        {
-            $prettyname = $this->prettyName($row['name']);
-            $mout .= '<li><a href="./?view=player-stats&id=' . $row['id'] . '">' . $prettyname . '</a></li>';
-            $mod_count++;
-        }
+            foreach($result as $row)
+            {
+                $prettyname = $this->prettyName($row['name']);
+                $mout .= '<li><a href="./?view=player-stats&id=' . $row['id'] . '">' . $prettyname . '</a></li>';
+                $mod_count++;
+            }
         }
         $mout .= '
         </ul>';
