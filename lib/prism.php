@@ -735,7 +735,7 @@ class Prism
       <table id="banlist" class="table table-bordered table-hover">
       <thead>
       <tr>
-        <th></th>
+        <th>Info</th>
         <th>ID</th>
         <th>Client</th>
         <th>Added</th>
@@ -769,7 +769,7 @@ class Prism
             </ul>';
             $out .= '
             <tr>
-              <td><a tabindex="0" data-toggle="popover" title="Ban Details" data-content="' . $ban_details . '" data-html="true" data-placement="right" data-trigger="focus"><i class="fa fa-chevron-right cursor-pointer"></i></a></td>
+              <td class="text-center"><a tabindex="0" data-toggle="popover" title="Ban Details" data-content="' . $ban_details . '" data-html="true" data-placement="right" data-trigger="focus"><i class="fa fa-info-circle cursor-pointer"></i></a></td>
               <td>' . $row['id'] . '</td>
               <td>' . $prettyname . '</td>
               <td>' . $row['timestamp'] . '</td>
