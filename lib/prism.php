@@ -731,7 +731,7 @@ class Prism
       <div class="page-header">
         <h1>Banlist</h1>
       </div>
-      <p>If you are in this list you can only reconnect when the temporary ban has expired or never when a ban is permanent.</p>
+      <p>If you are on this list, you will not be able reconnect until the temporary ban has expired, or never if the ban is permanent.</p>
       <table id="banlist" class="table table-bordered table-hover">
       <thead>
       <tr>
