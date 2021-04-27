@@ -27,18 +27,20 @@ class Prism
         $this->_offline = false;
         $this->_params = array();
         $this->_players = array();
+        $this->_db_errorcount = 0;
     }
 
     private function dbQuery($query, $params=array(), $liste=false)
     {
         try {
             $conn = new PDO('sqlite:' . $this->_db_path);
-            $stmt = $conn->prepare(strval($query));
+            $stmt = $conn->prepare(strval($query), array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+            if ($stmt == false) { ++$this->_db_errorcount; throw new PDOException("Database file '" . $this->_db_path . "' not found"); }
             $stmt->execute($params);
             $result = ($liste ? $stmt->fetchAll() : $stmt->fetch());
             $conn = null;
         } catch (PDOException $e) {
-            $result = '<div class="alert alert-danger"><strong>Exception:</strong> ' . $e->getMessage();
+            if ($this->_db_errorcount < 2) echo '<div class="alert alert-danger"><strong>Exception:</strong> ' . $e->getMessage() . '</div>';
         }
         return $result;
     }
