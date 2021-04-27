@@ -755,10 +755,10 @@ class Prism
                 $type = "TempBan";
                 $duration = $this->timeDiff($row['timestamp'], $row['expires']) . ' seconds';
                 $exp_format = date_format(date_create($row['expires']), 'F jS, Y G:i A');
-                if (($expiration - $row['timestamp']) >= 20) { $expiration = "<span class='label label-danger'>never</span>"; $type = "PermBan"; $duration = 'permanent'; $exp_format = 'never'; }
-                list ($reason, $admin) = explode(", ban by ", $row['reason']);
-                $rdic = array('tk' => 'stop team killing!', 'wh' => 'wallhack', 'aim' => 'aimbot', 'sk' => 'stop spawn killing!', 'tempban' => 'temporary ban');
-                if ($rdic[$reason]) { $retval = $rdic[$reason]; $keyword = $reason;} else {$retval = $reason; $keyword ='None';}
+                if ((strtotime($expiration) - strtotime($row['timestamp'])) >= 630720000) { $expiration = "<span class='label label-danger'>never</span>"; $type = "PermBan"; $duration = 'permanent'; $exp_format = 'never'; }
+                list ($reason, $admin) = array_pad(explode((", ban by " ?: ", autokick"), $row['reason']), 2, null);
+                $rdic = array('tk' => 'stop team killing!', 'wh' => 'wallhack', 'wallhack' => 'wallhack', 'aim' => 'aimbot', 'aimbot' => 'aimbot', 'sk' => 'stop spawn killing!', 'tempban' => 'temporary ban');
+                if (in_array($reason, $rdic)) { $retval = $rdic[$reason]; $keyword = $reason; } else { $retval = $reason; $keyword = 'None'; }
                 $ban_details = '<p>Penalty issued to <strong>' . $row['name'] . '</strong></br>on ' . date_format(date_create($row['timestamp']), 'F jS, Y G:i A') . '</p>
                 <ul>
                   <li>Ban ID: ' . $row['id'] . '</li>
