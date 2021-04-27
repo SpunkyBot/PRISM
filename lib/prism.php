@@ -1,7 +1,7 @@
 <?php
 // PRISM - Web frontend for Spunky Bot
 // Author: Alexander Kress
-$version = "0.9.11";
+$version = "0.9.12";
 
 // define error level
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
