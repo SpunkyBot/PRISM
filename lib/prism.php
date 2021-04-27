@@ -343,7 +343,7 @@ class Prism
             <th>Name</th>
             <th>Skill</th>
             <th>Ratio</th>
-            <th>Kills/Deaths (Suicides)</th>
+            <th>Kills / Deaths (Suicides)</th>
             <th>Team Kills / Deaths</th>
             <th>Rounds / Connections</th>
             <th>Win Streak</th>
