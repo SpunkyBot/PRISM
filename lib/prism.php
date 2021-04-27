@@ -351,7 +351,7 @@ class Prism
           </thead>
           <tbody>';
         $rank = 0;
-        $highest_skill = 800;
+        $highest_skill = 300;
         $highest_skill_id = "";
         $highest_skill_name = "";
         $best_efficiency = 0;
