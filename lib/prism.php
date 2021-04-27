@@ -29,13 +29,13 @@ class Prism
         $this->_players = array();
     }
 
-    private function dbQuery($query, $params=array(), $list=false)
+    private function dbQuery($query, $params=array(), $liste=false)
     {
         try {
             $conn = new PDO('sqlite:' . $this->_db_path);
             $stmt = $conn->prepare(strval($query));
             $stmt->execute($params);
-            $result = ($list ? $stmt->fetchAll() : $stmt->fetch());
+            $result = ($liste ? $stmt->fetchAll() : $stmt->fetch());
             $conn = null;
         } catch (PDOException $e) {
             $result = '<div class="alert alert-danger"><strong>Exception:</strong> ' . $e->getMessage();
