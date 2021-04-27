@@ -763,11 +763,11 @@ class Prism
                 <ul>
                   <li>Ban ID: ' . $row['id'] . '</li>
                   <li>Type: ' . $type . '</li>
-                  <li>Reason: ' . $retval  . '</li>
+                  <li>Reason: ' . $retval . '</li>
                   <li>Duration: ' . $duration . '</li>
                   <li>Admin: ' . ($admin ?: 'Bot') . '</li>
-                  <li>Keyword: ' . $keyword  . '</li>
-                  <li>Expiration: ' . $exp_format  . '</li>
+                  <li>Keyword: ' . $keyword . '</li>
+                  <li>Expiration: ' . $exp_format . '</li>
                 </ul>';
                 $out .= '
                 <tr>
