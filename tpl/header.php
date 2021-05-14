@@ -9,7 +9,6 @@
     <meta name="keywords" content="Spunky Bot, PRISM, Player, Related, Information, Statistic, Monitor, web, frontend, Urban, Terror">
     <meta name="apple-mobile-web-app-title" content="PRISM">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="author" content="Alexander Kress">
     <link rel="shortcut icon" type="image/x-icon" href="./favicon.ico">
     <link rel="icon" sizes="16x16 32x32" href="./favicon.ico">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">

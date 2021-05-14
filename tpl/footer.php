@@ -1,7 +1,7 @@
 
     </div>
     <footer class="footer container text-center">
-      <div class="small">Copyright © 2021 PRISM <?php echo htmlspecialchars($version, ENT_QUOTES, 'UTF-8'); ?> for <a href="https://github.com/SpunkyBot/spunkybot">Spunky Bot</a></div>
+      <div class="small">Powered by PRISM <?php echo htmlspecialchars($version, ENT_QUOTES, 'UTF-8'); ?> for <a href="https://github.com/SpunkyBot/spunkybot">Spunky Bot</a></div>
     </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha512-oBTprMeNEKCnqfuqKd6sbvFzmFQtlXS3e0C/RGFV0hD6QzhHV+ODfaQbAlmY6/q0ubbwlAM/nCJjkrgA3waLzg==" crossorigin="anonymous"></script>
