@@ -35,7 +35,7 @@ class Prism
         try {
             $conn = new PDO('sqlite:' . $this->_db_path);
             $stmt = $conn->prepare(strval($query), array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-            if ($stmt == false) { ++$this->_db_errorcount; throw new PDOException("Database file '" . $this->_db_path . "' not found"); }
+            if ($stmt === false) { ++$this->_db_errorcount; throw new PDOException("Database file '" . $this->_db_path . "' not found"); }
             $stmt->execute($params);
             $result = ($liste ? $stmt->fetchAll() : $stmt->fetch());
             $conn = null;
